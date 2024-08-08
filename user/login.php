@@ -48,6 +48,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit" class="button">Login</button>
         </form>
+        <!-- login as admin . get one folder back-->
+        <a href="../admin/login.php" class="button">Admin Login</a>
+        
     </div>
 </body>
 </html>

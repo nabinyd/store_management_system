@@ -7,7 +7,29 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $sql = "SELECT * FROM products";
+
 $result = $conn->query($sql);
+
+// get the order quantity for each product from orders table and then set the stock quantity to stock quantity - order quantity
+
+$products = array();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $product_id = $row['product_id'];
+        $order_sql = "SELECT SUM(quantity) as quantity FROM orders WHERE product_id=$product_id";
+        $order_result = $conn->query($order_sql);
+        $order_row = $order_result->fetch_assoc();
+        $total_ordered = $order_row['quantity']? $order_row['quantity'] : 0;
+
+        $row['stock_quantity'] = $row['stock_quantity'] - $total_ordered;
+
+        $products[] = $row;
+    }
+} else {
+    echo "No products found";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -28,14 +50,13 @@ $result = $conn->query($sql);
     </div>
     <div class="container">
         <?php
-        if ($result->num_rows > 0) {
+        if (!empty($products)) {
             echo "<table><tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Stock Quantity</th></tr>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["product_id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["description"] . "</td><td>" . $row["price"] . "</td><td>" . $row["stock_quantity"] . "</td></tr>";
+            foreach ($products as $product) {
+                echo "<tr><td>" . $product["product_id"] . "</td><td>" . $product["name"] . "</td><td>" . $product["description"] . "</td><td>" . $product["price"] . "</td><td>" . 
+                ($product["stock_quantity"] <= 0 ? "Out of Stock" : $product["stock_quantity"])
+                . "</td></tr>";
             }
-            echo "</table>";
-        } else {
-            echo "No products found";
         }
         ?>
     </div>

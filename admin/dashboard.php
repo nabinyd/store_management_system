@@ -22,6 +22,7 @@ if (!isset($_SESSION['admin_id'])) {
         <a href="manage_customers.php">Manage Customers</a>
         <a href="manage_orders.php">Manage Orders</a>
         <a href="logout.php">Logout</a>
+        <a href=" ../user/login.php"> login as user</a>
     </div>
     <div class="container">
         <h2>Welcome, Admin</h2>
