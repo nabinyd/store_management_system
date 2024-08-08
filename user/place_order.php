@@ -5,22 +5,31 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
-
+// reduce the stock quantity of the product by the quantity ordered
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $product_id = $_POST['product_id'];
     $quantity = $_POST['quantity'];
     $user_id = $_SESSION['user_id'];
-
+    
+    $sqlStock = "SELECT stock_quantity FROM products WHERE product_id='$product_id'";
+    
+    // if order quantity is greater than stock quantity, display an error message
+    $resultStock = $conn->query($sqlStock);
+    $rowStock = $resultStock->fetch_assoc();
+    if ($quantity > $rowStock['stock_quantity']) {
+        echo "Error: Order quantity is greater than stock quantity";
+        exit();
+    }
+    
     $sql = "INSERT INTO orders (customer_id, product_id, quantity) VALUES ('$user_id', '$product_id', '$quantity')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Order placed successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
+    } 
 }
 
 $sql = "SELECT * FROM products";
+
 $result = $conn->query($sql);
 ?>
 

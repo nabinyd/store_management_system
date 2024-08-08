@@ -65,7 +65,7 @@ $result = $conn->query($sql);
 </head>
 <body>
     <div class="header">
-        <h1>Manage Products</h1>
+        <h1>Update Products</h1>
     </div>
     <div class="navbar">
         <a href="dashboard.php">Dashboard</a>

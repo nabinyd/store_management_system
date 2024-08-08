@@ -10,8 +10,6 @@ $sql = "SELECT * FROM products";
 
 $result = $conn->query($sql);
 
-// get the order quantity for each product from orders table and then set the stock quantity to stock quantity - order quantity
-
 $products = array();
 
 if ($result->num_rows > 0) {
@@ -21,8 +19,6 @@ if ($result->num_rows > 0) {
         $order_result = $conn->query($order_sql);
         $order_row = $order_result->fetch_assoc();
         $total_ordered = $order_row['quantity']? $order_row['quantity'] : 0;
-
-        $row['stock_quantity'] = $row['stock_quantity'] - $total_ordered;
 
         $products[] = $row;
     }
@@ -47,6 +43,7 @@ if ($result->num_rows > 0) {
         <a href="view_products.php">View Products</a>
         <a href="place_order.php">Place Order</a>
         <a href="logout.php">Logout</a>
+        <a href="../admin/login.php">Login as admin</a>
     </div>
     <div class="container">
         <table>

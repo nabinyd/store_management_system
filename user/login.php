@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <h1>User Login</h1>
     </div>
     <div class="container">
-        <form method="post" action="">
+        <form id="userlogin" method="post" action="">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
@@ -53,7 +53,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </form>
         <!-- login as admin . get one folder back-->
         <a href="../admin/login.php" class="button">Admin Login</a>
-        
+
+        <a href="register.php" class="button">Register</a>
+        <a href="../index.php" class="button">Home</a>
     </div>
 </body>
 </html>
