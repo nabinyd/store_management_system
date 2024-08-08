@@ -36,7 +36,7 @@ if ($result->num_rows > 0) {
 <html>
 <head>
     <title>View Products</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -49,16 +49,30 @@ if ($result->num_rows > 0) {
         <a href="logout.php">Logout</a>
     </div>
     <div class="container">
-        <?php
-        if (!empty($products)) {
-            echo "<table><tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Stock Quantity</th></tr>";
-            foreach ($products as $product) {
-                echo "<tr><td>" . $product["product_id"] . "</td><td>" . $product["name"] . "</td><td>" . $product["description"] . "</td><td>" . $product["price"] . "</td><td>" . 
-                ($product["stock_quantity"] <= 0 ? "Out of Stock" : $product["stock_quantity"])
-                . "</td></tr>";
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock Quantity</th>
+            </tr>
+            <?php
+            if (!empty($products)) {
+                foreach ($products as $product) {
+                    echo "<tr>";
+                    echo "<td>" . $product["product_id"] . "</td>";
+                    echo "<td>" . $product["name"] . "</td>";
+                    echo "<td>" . $product["description"] . "</td>";
+                    echo "<td>" . $product["price"] . "</td>";
+                    echo "<td>" . ($product["stock_quantity"] <= 0 ? "Out of Stock" : $product["stock_quantity"]) . "</td>";
+                    echo "</tr>";
+                }
             }
-        }
-        ?>
+            ?>
+        </table>
+    </div>
+        
     </div>
 </body>
 </html>

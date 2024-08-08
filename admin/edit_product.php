@@ -60,7 +60,7 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Manage Products</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 
 </head>
 <body>
