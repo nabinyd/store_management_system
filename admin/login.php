@@ -48,6 +48,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit" class="button">Login</button>
         </form>
+        <!-- button for admin register -->
+        <a href="admin_register.php" class="button">Register</a>
     </div>
 </body>
 </html>

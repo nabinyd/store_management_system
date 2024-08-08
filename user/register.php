@@ -25,6 +25,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
 </head>
 <body>
+    <div>
+    <a href="../admin/login.php">Login as admin</a>
+    </div>
     <div class="header">
         <h1>User Registration</h1>
     </div>
@@ -44,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit" class="button">Register</button>
         </form>
+        <!-- <p>already have an account: <a href="login.php">Log in</a></p> -->
     </div>
 </body>
 </html>
