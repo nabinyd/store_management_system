@@ -14,7 +14,7 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Manage Customers</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -26,6 +26,7 @@ $result = $conn->query($sql);
         <a href="manage_customers.php">Manage Customers</a>
         <a href="manage_orders.php">Manage Orders</a>
         <a href="logout.php">Logout</a>
+        <a href=" ../user/login.php"> login as user</a>
     </div>
     <div class="container">
         <?php

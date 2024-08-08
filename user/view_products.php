@@ -7,14 +7,36 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $sql = "SELECT * FROM products";
+
 $result = $conn->query($sql);
+
+// get the order quantity for each product from orders table and then set the stock quantity to stock quantity - order quantity
+
+$products = array();
+
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $product_id = $row['product_id'];
+        $order_sql = "SELECT SUM(quantity) as quantity FROM orders WHERE product_id=$product_id";
+        $order_result = $conn->query($order_sql);
+        $order_row = $order_result->fetch_assoc();
+        $total_ordered = $order_row['quantity']? $order_row['quantity'] : 0;
+
+        $row['stock_quantity'] = $row['stock_quantity'] - $total_ordered;
+
+        $products[] = $row;
+    }
+} else {
+    echo "No products found";
+}
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>View Products</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -27,17 +49,30 @@ $result = $conn->query($sql);
         <a href="logout.php">Logout</a>
     </div>
     <div class="container">
-        <?php
-        if ($result->num_rows > 0) {
-            echo "<table><tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Stock Quantity</th></tr>";
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["product_id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["description"] . "</td><td>" . $row["price"] . "</td><td>" . $row["stock_quantity"] . "</td></tr>";
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Stock Quantity</th>
+            </tr>
+            <?php
+            if (!empty($products)) {
+                foreach ($products as $product) {
+                    echo "<tr>";
+                    echo "<td>" . $product["product_id"] . "</td>";
+                    echo "<td>" . $product["name"] . "</td>";
+                    echo "<td>" . $product["description"] . "</td>";
+                    echo "<td>" . $product["price"] . "</td>";
+                    echo "<td>" . ($product["stock_quantity"] <= 0 ? "Out of Stock" : $product["stock_quantity"]) . "</td>";
+                    echo "</tr>";
+                }
             }
-            echo "</table>";
-        } else {
-            echo "No products found";
-        }
-        ?>
+            ?>
+        </table>
+    </div>
+        
     </div>
 </body>
 </html>

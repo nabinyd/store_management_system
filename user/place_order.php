@@ -28,7 +28,7 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>Place Order</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -39,6 +39,7 @@ $result = $conn->query($sql);
         <a href="view_products.php">View Products</a>
         <a href="place_order.php">Place Order</a>
         <a href="logout.php">Logout</a>
+        <a href="../admin/login.php">Login as admin</a>
     </div>
     <div class="container">
         <form method="post" action="">

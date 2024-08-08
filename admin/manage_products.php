@@ -24,15 +24,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Handle other actions like edit and delete here
 }
 
-$sql = "SELECT * FROM products";
-$result = $conn->query($sql);
-?>
+
+// delete product action 
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_product'])) {
+
+        $product_id = $conn->real_escape_string($_POST['product_id']);
+
+        $sql = "DELETE FROM orders WHERE product_id='$product_id'";
+        $conn->query($sql);
+
+        $sql = "DELETE FROM products WHERE product_id='$product_id'";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "Product deleted successfully";
+        } else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+    $sql = "SELECT * FROM products";
+    $result = $conn->query($sql);
+    ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Manage Products</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -44,6 +61,7 @@ $result = $conn->query($sql);
         <a href="manage_customers.php">Manage Customers</a>
         <a href="manage_orders.php">Manage Orders</a>
         <a href="logout.php">Logout</a>
+        <a href=" ../user/login.php"> login as user</a>
     </div>
     <div class="container">
         <h2>Add New Product</h2>
@@ -72,7 +90,13 @@ $result = $conn->query($sql);
         if ($result->num_rows > 0) {
             echo "<table><tr><th>ID</th><th>Name</th><th>Description</th><th>Price</th><th>Stock Quantity</th><th>Actions</th></tr>";
             while ($row = $result->fetch_assoc()) {
-                echo "<tr><td>" . $row["product_id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["description"] . "</td><td>" . $row["price"] . "</td><td>" . $row["stock_quantity"] . "</td><td>Edit | Delete</td></tr>";
+                echo "<tr><td>" . $row["product_id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["description"] . "</td><td>" . $row["price"] . "</td><td>" . $row["stock_quantity"] . "</td><td>
+                <a href='edit_product.php?product_id=" . $row["product_id"] . "'>Edit</a>
+                <form method='post' action=''>
+                    <input type='hidden' name='product_id' value='" . $row["product_id"] . "'>
+                    <button type='submit' name='delete_product' class='button'>Delete</button>
+                </form>
+                </td></tr>";
             }
             echo "</table>";
         } else {

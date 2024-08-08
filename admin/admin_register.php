@@ -3,10 +3,10 @@ include '../db.php';
 session_start();
 
 // Check if the current user is an admin
-if (!isset($_SESSION['admin_id'])) {
-    header("Location: login.php");
-    exit();
-}
+// if (!isset($_SESSION['admin_id'])) {
+//     header("Location: login.php");
+//     exit();
+// }
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
 <head>
     <title>Admin Registration</title>
-    <link rel="stylesheet" type="text/css" href="../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../css/stylesheet.css">
 </head>
 <body>
     <div class="header">
@@ -49,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="manage_customers.php">Manage Customers</a>
         <a href="manage_orders.php">Manage Orders</a>
         <a href="logout.php">Logout</a>
+        <a href=" ../user/login.php"> login as user</a>
     </div>
     <div class="container">
         <form method="post" action="">
@@ -62,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
             <button type="submit" class="button">Register</button>
         </form>
+        <p>already have an account: <a href="login.php">Log in</a></p>
     </div>
 </body>
 </html>
