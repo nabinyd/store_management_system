@@ -4,6 +4,18 @@ if (!isset($_SESSION['admin_id'])) {
     header("Location: login.php");
     exit();
 }
+
+
+// get admin details
+include '../db.php';
+
+$admin_id = $_SESSION['admin_id'];
+
+$sql = "SELECT * FROM admins WHERE admin_id=$admin_id";
+
+$result = $conn->query($sql);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -25,9 +37,12 @@ if (!isset($_SESSION['admin_id'])) {
         <a href=" ../user/login.php"> login as user</a>
     </div>
     <div class="container">
-        <h2>Welcome, Admin</h2>
-                <!-- Add additional content or features here -->
-                 <!-- Add additional content or features here -->
+        <?php
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            echo "<p>Welcome " . $row['username'] . "</p>";
+        }
+        ?>
 <div class="dashboard">
     <div class="card">
         <h2>Register Admin</h2>

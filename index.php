@@ -46,13 +46,15 @@ session_start();
         ?>
     </div>
     <div class="container">
-        <h2>Welcome to our Store Management System</h2>
+        <!-- <h2>Welcome to our Store Management System</h2> -->
         <p>This is a simple store management system where users can view products and place orders, and admins can manage products, customers, and orders.</p>
-        <p>Project Created By:<p>
-            <p>1. Sushant Niraula</p>
-            <p>2. Nabin Yadav</p>
-            <p>3. Lokesh Mandal</p>
-            <p>4. Sneha Yadav</p>
+        <h3>Project Created By:</h3>
+        <ul>
+            <li>Sushant Niraula</li>
+            <li>Nabin Yadav</li>
+            <li>Lokesh Kumar Mandal</li>
+            <li>Sneha Yadav</li>
+        </ul>
     </div>
 </body>
 </html>
