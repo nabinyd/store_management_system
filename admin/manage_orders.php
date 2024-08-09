@@ -20,7 +20,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_order'])) {
     if ($conn->query($sql) === TRUE) {
         echo "Order deleted successfully";
     }
-} 
+}
+
+
+if (isset($_GET['search_query'])) {
+    $search_query = $_GET['search_query'];
+    $search_query = "%" . $search_query . "%"; // Prepare for LIKE query
+
+    // SQL query to search in the view
+    $sql = "SELECT * FROM customer_product_view 
+            WHERE customer_id LIKE ? 
+            OR `name` LIKE ? 
+            OR product_name LIKE ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $search_query, $search_query, $search_query);
+    $stmt->execute();
+    $search_result = $stmt->get_result();
+
+    if ($search_result->num_rows > 0) {
+        echo "<table><tr><th>Customer ID</th><th>Customer Name</th><th>Product Name</th></tr>";
+        while ($row = $search_result->fetch_assoc()) {
+            echo "<tr><td>" . $row["customer_id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["product_name"] . "</td></tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "No records found.";
+    }
+
+    $stmt->close();
+} else {
+    echo "Please enter a search query.";
+}
 ?>
 
 <!DOCTYPE html>
@@ -42,6 +73,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_order'])) {
         <a href="manage_orders.php">Manage Orders</a>
         <a href="logout.php">Logout</a>
         <a href=" ../user/login.php"> login as user</a>
+    </div>
+    <div>
+        <form method="GET" action="">
+            <input type="text" name="search_query" placeholder="Search by Customer Name, ID, or Product Name..." style="width:250px">
+            <button type="submit">Search</button>
+        </form>
     </div>
     <div class="container manage_orders">
         <?php
