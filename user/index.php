@@ -17,6 +17,7 @@ $sql = "SELECT o.order_id, p.name as product_name, o.quantity, o.order_date
         FROM orders o 
         JOIN products p ON o.product_id = p.product_id
         WHERE o.customer_id=$user_id";
+
 $result = $conn->query($sql);
 
 
@@ -29,6 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" )  {
         $order_id = $conn->real_escape_string($_POST['order_id']);
     
         $sql_delete = "DELETE FROM orders WHERE order_id='$order_id'";
+
         if ($conn->query($sql_delete) === TRUE) {
             echo "Order deleted successfully";
             $result = $conn->query($sql);
