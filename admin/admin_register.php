@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check if the username already exists
     $sql = "SELECT * FROM admins WHERE username='$username'";
+    
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0) {

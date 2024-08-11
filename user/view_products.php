@@ -8,17 +8,13 @@ if (!isset($_SESSION['user_id'])) {
 
 $sql = "SELECT * FROM products";
 
+
 $result = $conn->query($sql);
 
 $products = array();
 
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $product_id = $row['product_id'];
-        $order_sql = "SELECT SUM(quantity) as quantity FROM orders WHERE product_id=$product_id";
-        $order_result = $conn->query($order_sql);
-        $order_row = $order_result->fetch_assoc();
-        $total_ordered = $order_row['quantity'] ? $order_row['quantity'] : 0;
 
         $products[] = $row;
     }
