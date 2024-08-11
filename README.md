@@ -18,7 +18,11 @@ git clone  https://github.com/SushantNiraula/store_management_system.git
 3. Copy the repository to the htdocs folder in xampp
 4. Start the apache and mysql services in xampp
 5. Open phpmyadmin and create a database called `store_db`
+
+```
  Note: You can copy code to create database and tables from `create_db.sql` file in the repository
+```
+
 6. Import the `store_db.sql` file into the database
 7. Open a browser and go to `localhost/store_management_system`
 
